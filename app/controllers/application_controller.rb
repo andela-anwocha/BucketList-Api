@@ -4,17 +4,16 @@ class ApplicationController < ActionController::API
   protected
 
   def authenticate_request!
-    if user_id_in_token?
-      user_active?
-    else
+    unless user_id_in_token? && user_active?
       render json: { error: "Unauthorized" }, status: 401
     end
   end
 
   def user_active?
     @user = User.find_by(id: auth_token[:user_id])
-    if @user && @user.token
-      validate_token
+
+    if @user && @user.token && validate_token(@user.token)
+      true
     else
       render json: { error: "Unauthenticated User" }, status: 401
       false
@@ -22,19 +21,19 @@ class ApplicationController < ActionController::API
   end
 
   def auth_token
-    Auth.decode(http_token)
+    Authentication.decode(http_token)
   end
 
   private
 
-  def validate_token
-    return true if @user.token == http_token
+  def validate_token(token)
+    return true if token == http_token
     render json: { error: "Invalid Token" }, status: 401
     false
   end
 
   def http_token
-    request.headers[:HTTP_TOKEN]
+    request.headers[:HTTP_AUTHORIZATION]
   end
 
   def user_id_in_token?

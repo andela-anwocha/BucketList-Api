@@ -4,7 +4,6 @@ class Authentication
   def self.encode(payload)
     exp = Time.now.to_i + 4 * 3600
     exp_payload = { data: payload, exp: exp }
-    binding.pry
     JWT.encode(exp_payload, Rails.application.secrets.secret_key_base)
   end
 
