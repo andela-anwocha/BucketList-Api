@@ -12,7 +12,7 @@ module RequestHelper
     post api_v1_login_url, email: "invalid_email", password: "password"
   end
 
-  def auth_header(user)
+  def header(user)
     { "HTTP_AUTHORIZATION" => user.token }
   end
 
