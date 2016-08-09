@@ -1,7 +1,7 @@
 require "rails_helper"
 
-RSpec.describe "AuthenticationController", type: :request do
-  let(:user){ create(:user) }
+RSpec.describe "Authentication", type: :request do
+  let(:user) { create(:user) }
   describe "POST /api/v1/oauth/login" do
     context "when valid attributes are passed in" do
       it "signs in user" do
@@ -22,7 +22,7 @@ RSpec.describe "AuthenticationController", type: :request do
   end
 
   describe "GET /auth/logout" do
-    before{ login_user(user) }
+    before { login_user(user) }
 
     context "with a valid authorization header" do
       it "logs the user out and destroys the users token" do
@@ -35,11 +35,10 @@ RSpec.describe "AuthenticationController", type: :request do
 
     context "with an invalid authorization header" do
       it "does not logout the user" do
-        get api_v1_logout_path, {}, invalid_auth_header(user)
+        get api_v1_logout_path, {}, invalid_header(user)
 
         expect(user.token).to_not be_nil
       end
     end
-
   end
 end
