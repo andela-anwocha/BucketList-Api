@@ -1,7 +1,6 @@
 module Api
   module V1
     class AuthenticationController < ApplicationController
-
       def login
         user = User.find_by(email: params[:email])
         if user && user.authenticate(params[:password])
@@ -20,7 +19,6 @@ module Api
           render json: { notice: "Logout successful" }, status: 200
         end
       end
-
     end
   end
 end
