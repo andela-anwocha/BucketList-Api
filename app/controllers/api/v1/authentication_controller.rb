@@ -6,7 +6,7 @@ module Api
         if user && user.authenticate(params[:password])
           token = Authentication.encode(user_id: user.id)
           user.update(token: token)
-          render json: { notice: "Login successful", token: token }, status: 201
+          render json: { notice: "Login successful", token: token }, status: 200
         else
           render json: { error: "Incorrect username or password" }, status: 401
         end

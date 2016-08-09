@@ -1,8 +1,8 @@
 module Api
   module V1
     class BucketListsController < ApplicationController
-      before_filter :authenticate_request
-      before_action :assign_bucket_list, only: :show
+      before_action :authenticate_request
+      before_action :assign_bucket_list, only: [:show, :destroy]
 
       def index
         render json: @user.bucket_lists, status: :ok
@@ -14,7 +14,8 @@ module Api
           @bucket_list.update(user: @user)
           render json: @bucket_list, status: :created
         else
-          render json: { errors: @bucket_list.errors }, status: :unprocessable_entity
+          render json: { errors: @bucket_list.errors },
+                 status: :unprocessable_entity
         end
       end
 
@@ -23,6 +24,14 @@ module Api
           render json: @bucket_list, status: :ok
         else
           render json: { error: "Bucket List not found" }, status: :not_found
+        end
+      end
+
+      def destroy
+        if @bucket_list && @bucket_list.destroy
+          head :no_content
+        else
+          render json: { errors: "Bucket List Not found" }, status: 404
         end
       end
 
@@ -35,7 +44,6 @@ module Api
       def assign_bucket_list
         @bucket_list = BucketList.find_by(id: params[:id])
       end
-
     end
   end
 end
