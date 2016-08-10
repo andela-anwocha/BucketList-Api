@@ -2,43 +2,22 @@ require "rails_helper"
 
 RSpec.describe "BucketLists", type: :request do
   let(:user) { create(:user) }
-
   before { login_user(user) }
-
-  describe "POST /api/v1/bucketlists" do
-    let(:params) { attributes_for(:bucket_list) }
-
-    context "as an authenticated user with valid authorization token" do
-      it "creates the bucketlist" do
-        expect { post api_v1_bucketlists_url, params, header(user) }.
-          to change(BucketList, :count).by(1)
-        expect(response.status).to eq(201)
-      end
-    end
-
-    context "as a logged in user with invalid authorization token" do
-      it "does not create the bucketlist" do
-        expect { post api_v1_bucketlists_url, params, invalid_header(user) }.
-          to_not change(BucketList, :count)
-        expect(response.status).to eq(401)
-      end
-    end
-
-    context "as an unauthenticated user" do
-      it "does not create the bucketlist" do
-        expect { post api_v1_bucketlists_url, params }.
-          to_not change(BucketList, :count)
-        expect(response.status).to eq(401)
-      end
-    end
-  end
 
   describe "GET /api/v1/bucketlists" do
     context "as an authenticated user" do
-      it "returns all bucket lists" do
+      it "returns all bucket lists when bucketlists are found" do
         get api_v1_bucketlists_url, {}, header(user)
 
         expect(json_response.count).to eq(user.bucket_lists.count)
+        expect(response.status).to eq(200)
+      end
+
+      it "returns a 'No Bucket List found' message when none is found" do
+        user.bucket_lists.destroy_all
+
+        get api_v1_bucketlists_url, {}, header(user)
+        expect(json_response[:message]).to eq("No Bucket list found")
         expect(response.status).to eq(200)
       end
     end
@@ -56,6 +35,42 @@ RSpec.describe "BucketLists", type: :request do
       it "returns an error message" do
         get api_v1_bucketlists_url, {}
 
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
+  describe "POST /api/v1/bucketlists" do
+    let(:params) { attributes_for(:bucket_list) }
+
+    context "as an authenticated user with valid authorization token" do
+      it "creates the bucketlist when a unique name is given" do
+        expect { post api_v1_bucketlists_url, params, header(user) }.
+          to change(BucketList, :count).by(1)
+        expect(response.status).to eq(201)
+      end
+
+      it "does not create the bucket list when a non unique name is given" do
+        params = user.bucket_lists.first.attributes
+
+        expect { post api_v1_bucketlists_url, params, header(user) }.
+          to_not change(BucketList, :count)
+        expect(response.status).to eq(422)
+      end
+    end
+
+    context "as a logged in user with invalid authorization token" do
+      it "does not create the bucketlist" do
+        expect { post api_v1_bucketlists_url, params, invalid_header(user) }.
+          to_not change(BucketList, :count)
+        expect(response.status).to eq(401)
+      end
+    end
+
+    context "as an unauthenticated user" do
+      it "does not create the bucketlist" do
+        expect { post api_v1_bucketlists_url, params }.
+          to_not change(BucketList, :count)
         expect(response.status).to eq(401)
       end
     end
@@ -203,7 +218,7 @@ RSpec.describe "BucketLists", type: :request do
       it "returns all bucketlists matching the specified criteria" do
         pagination_query = { search: "Humanitarian", page: 1, limit: 1 }
         get api_v1_bucketlists_url, pagination_query, header(user)
-                
+
         expect(json_response[0].slice(:name).values).
           to match_array [user.bucket_lists.first.name]
         expect(response.status).to eq(200)
