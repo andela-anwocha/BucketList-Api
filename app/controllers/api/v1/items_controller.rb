@@ -3,7 +3,7 @@ module Api
     class ItemsController < ApplicationController
       before_action :authenticate_request
       before_action :assign_bucket_list
-      before_action :assign_item, only: [:show, :destroy]
+      before_action :assign_item, only: [:show, :destroy, :update]
 
       def index
         render json: @bucket_list.items, status: :ok
@@ -18,6 +18,15 @@ module Api
         if @item.save && @item.update(bucket_list: @bucket_list)
           render json: @item, status: :created,
                  location: api_v1_bucketlist_items_url(@bucket_list, @item)
+        else
+          render json: { errors: @item.errors }, status: :unprocessable_entity
+        end
+      end
+
+
+      def update
+        if @item.update(item_params)
+          render json: @item, status: 200
         else
           render json: { errors: @item.errors }, status: :unprocessable_entity
         end
