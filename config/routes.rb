@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
       resources :users, only: :create
 
-      resources :bucketlists, controller: :bucket_lists
+      resources :bucketlists, controller: :bucket_lists do
+        resources :items
+      end
 
       scope "/auth", controller: :authentication do
         get '/logout' => :logout
