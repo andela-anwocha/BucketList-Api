@@ -145,7 +145,7 @@ RSpec.describe "BucketLists", type: :request do
         search_query = { q: "Humanitarian" }
         get api_v1_bucketlists_url, search_query, header(user)
 
-        search_results = json_response.map{ |object| object[:name] }
+        search_results = json_response.map { |object| object[:name] }
         expect(search_results).to match_array(user.bucket_lists.pluck(:name))
       end
     end
