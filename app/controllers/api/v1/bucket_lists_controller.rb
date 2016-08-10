@@ -2,13 +2,13 @@ module Api
   module V1
     class BucketListsController < ApplicationController
       before_action :authenticate_request
-      before_filter :assign_bucket_list, only: [:show, :destroy, :update]
+      before_action :assign_bucket_list, only: [:show, :destroy, :update]
 
       def index
         @bucket_lists = @user.bucket_lists
 
         if @bucket_lists.empty?
-          render json: { message: "No Bucket list found" }, status: :ok
+          render json: { message: Message.no_bucket }, status: :ok
         else
           render json: @bucket_lists.paginate_and_search(params), status: :ok
         end
@@ -50,9 +50,10 @@ module Api
       def assign_bucket_list
         @bucket_list = @user.bucket_lists.find_by(id: params[:id])
         unless @bucket_list
-          render json: { error: "Bucket List Not found" }, status: :not_found
+          render json: { error: Message.invalid_bucket }, status: :not_found
         end
       end
+      
     end
   end
 end
