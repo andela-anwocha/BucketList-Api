@@ -136,7 +136,6 @@ RSpec.describe "BucketLists", type: :request do
         expect(response.status).to eq(401)
       end
     end
-
   end
 
   describe "DELETE /api/v1/bucketlists/:id" do

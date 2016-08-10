@@ -10,6 +10,5 @@ FactoryGirl.define do
       count = evaluator.item_count
       bucket_list.update(items: FactoryGirl.create_list(:item, count))
     end
-
   end
 end
