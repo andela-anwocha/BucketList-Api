@@ -26,8 +26,6 @@ class ApplicationController < ActionController::API
 
   def validate_token(token)
     return true if token == http_token
-    render json: { error: "Invalid Token" }, status: :unauthorized
-    false
   end
 
   def http_token

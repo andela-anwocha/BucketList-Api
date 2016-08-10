@@ -14,6 +14,7 @@ group :development, :test do
   gem "rubocop"
   gem "pry-rails"
   gem "spring"
+  gem "simplecov", require: false
 end
 
 group :production do
