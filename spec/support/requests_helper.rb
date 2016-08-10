@@ -16,7 +16,7 @@ module RequestHelper
     { "HTTP_AUTHORIZATION" => user.token }
   end
 
-  def invalid_auth_header(user)
+  def invalid_header(user)
     { "HTTP_AUTHORIZATION" => "#{user.token}invalid" }
   end
 end

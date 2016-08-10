@@ -1,4 +1,4 @@
-require 'jwt'
+require "jwt"
 
 class Authentication
   def self.encode(payload)
