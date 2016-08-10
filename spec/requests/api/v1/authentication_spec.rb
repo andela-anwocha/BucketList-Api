@@ -8,7 +8,7 @@ RSpec.describe "Authentication", type: :request do
         login_user(user)
         user.reload
 
-        expect(response.status).to eq(201)
+        expect(response.status).to eq(200)
       end
     end
 
