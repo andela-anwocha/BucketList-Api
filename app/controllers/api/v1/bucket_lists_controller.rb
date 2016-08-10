@@ -8,7 +8,7 @@ module Api
         @bucket_lists = @user.bucket_lists
 
         if @bucket_lists.empty?
-          render json: { message: MessageService.bucketlist_empty }, status: :ok
+          render json: { message: "No Bucket list found" }, status: :ok
         else
           render json: @bucket_lists.paginate_and_search(params), status: :ok
         end
