@@ -2,8 +2,8 @@ module Api
   module V1
     class ItemsController < ApplicationController
       before_action :authenticate_request
-      before_action :assign_bucket_list, only: [:create, :index]
-      before_action :assign_item, only: :show
+      before_action :assign_bucket_list
+      before_action :assign_item, only: [:show, :destroy]
 
       def index
         render json: @bucket_list.items, status: :ok
@@ -23,6 +23,15 @@ module Api
         end
       end
 
+      def destroy
+        if @item.destroy
+          head :no_content
+        else
+          render json: { error: "Error occured while deleting" }, 
+                  status: :internal_server_error
+        end
+      end
+
       private
 
       def item_params
@@ -39,7 +48,7 @@ module Api
       def assign_item
         @item = @bucket_list.items.find_by(id: params[:id]) if @bucket_list
         unless @item
-          render json: { error: "Bucket List not found" }, status: :not_found
+          render json: { error: "Item not found" }, status: :not_found
         end
       end
     end
