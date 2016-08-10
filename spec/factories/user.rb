@@ -8,9 +8,8 @@ FactoryGirl.define do
       bucket_count 0
     end
 
-    after(:create) do |user, evaluator|
+    after(:create) do |_user, evaluator|
       create_list(:bucket_list, evaluator.bucket_count)
     end
-
   end
 end
