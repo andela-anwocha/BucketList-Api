@@ -9,7 +9,7 @@ RSpec.describe "BucketLists", type: :request do
 
     context "as an authenticated user with valid authorization token" do
       it "creates the bucketlist" do
-        expect { post api_v1_bucketlists_url, params, auth_header(user) }.
+        expect { post api_v1_bucketlists_url, params, header(user) }.
           to change(BucketList, :count).by(1)
         expect(response.status).to eq(201)
       end
@@ -35,7 +35,7 @@ RSpec.describe "BucketLists", type: :request do
   describe "GET /api/v1/bucketlists" do
     context "as an authenticated user" do
       it "returns all bucket lists" do
-        get api_v1_bucketlists_url, {}, auth_header(user)
+        get api_v1_bucketlists_url, {}, header(user)
 
         expect(json_response.count).to eq(user.bucket_lists.count)
         expect(response.status).to eq(200)
@@ -64,7 +64,7 @@ RSpec.describe "BucketLists", type: :request do
     context "as an authenticated user with a valid bucketlist id" do
       it "returns the specific bucketlist" do
         bucket_id = { id: 1 }
-        get api_v1_bucketlist_url(bucket_id), {}, auth_header(user)
+        get api_v1_bucketlist_url(bucket_id), {}, header(user)
 
         expect(json_response[:name]).to eq(user.bucket_lists.first.name)
         expect(response.status).to eq(200)
@@ -73,9 +73,9 @@ RSpec.describe "BucketLists", type: :request do
 
     context "as an authenticated user with an invalid bucketlist id" do
       it "does not return the bucket list" do
-        get api_v1_bucketlist_url(id: 10), {}, auth_header(user)
+        get api_v1_bucketlist_url(id: 10), {}, header(user)
 
-        expect(json_response[:error]).to eq("Bucket List not found")
+        expect(json_response[:error]).to eq("Bucket List Not found")
         expect(response.status).to eq(404)
       end
     end
@@ -89,17 +89,63 @@ RSpec.describe "BucketLists", type: :request do
     end
   end
 
+  describe "PUT /api/v1/bucketlists/:id" do
+    context "as an authenticated user with valid bucket_list id" do
+      it "updates the bucket list" do
+        params = { name: "Name" }
+        put api_v1_bucketlist_url(id: 1), params, header(user)
+        user.reload
+
+        expect(user.bucket_lists.first.name).to eq(params[:name])
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context "as an authenticated user with invalid bucket_list id" do
+      it "does not update the bucket list" do
+        params = { name: "Name" }
+        invalid_id = { id: "invalid" }
+        put api_v1_bucketlist_url(invalid_id), params, header(user)
+        user.reload
+
+        expect(user.bucket_lists.first.name).to_not eq(params[:name])
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context "as an authenticated user with a non unique bucket name" do
+      it "does not update name and returns a 422 status error" do
+        params = { name: user.bucket_lists.last.name }
+        valid_id = { id: 1 }
+        put api_v1_bucketlist_url(valid_id), params, header(user)
+        user.reload
+
+        expect(user.bucket_lists.first.name).to_not eq(params[:name])
+        expect(response.status).to eq(422)
+      end
+    end
+
+    context "as an unauthenticated user" do
+      it "does not update name and renders a 401 status error" do
+        params = { name: user.bucket_lists.last.name }
+        valid_id = { id: 1 }
+        put api_v1_bucketlist_url(valid_id), params
+        user.reload
+
+        expect(user.bucket_lists.first.name).to_not eq(params[:name])
+        expect(response.status).to eq(401)
+      end
+    end
+
+  end
+
   describe "DELETE /api/v1/bucketlists/:id" do
     context "as an authenticated user with a valid bucketlist id" do
       it "removes the bucket list" do
         valid_id = { id: 1 }
 
-        expect do
-          delete api_v1_bucketlist_url(valid_id),
-                 {},
-                 auth_header(user)
-        end.to change(BucketList, :count).by(-1)
-
+        expect { delete api_v1_bucketlist_url(valid_id), {}, header(user) }.
+          to change(BucketList, :count).by(-1)
         expect(response.status).to eq(204)
       end
     end
@@ -108,12 +154,8 @@ RSpec.describe "BucketLists", type: :request do
       it "returns a 404 status" do
         invalid_id = { id: 3 }
 
-        expect do
-          delete api_v1_bucketlist_url(invalid_id),
-                 {},
-                 auth_header(user)
-        end.to_not change(BucketList, :count)
-
+        expect { delete api_v1_bucketlist_url(invalid_id), {}, header(user) }.
+          to_not change(BucketList, :count)
         expect(response.status).to eq(404)
       end
     end

@@ -26,7 +26,7 @@ RSpec.describe "Authentication", type: :request do
 
     context "with a valid authorization header" do
       it "logs the user out and destroys the users token" do
-        get api_v1_logout_path, {}, auth_header(user)
+        get api_v1_logout_path, {}, header(user)
         user.reload
 
         expect(user.token).to be_nil
