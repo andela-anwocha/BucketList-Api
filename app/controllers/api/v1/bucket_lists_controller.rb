@@ -5,7 +5,13 @@ module Api
       before_filter :assign_bucket_list, only: [:show, :destroy, :update]
 
       def index
-        render json: @user.bucket_lists, status: :ok
+        @bucket_lists = @user.bucket_lists
+
+        if @bucket_lists.empty?
+          render json: { message: "No Bucket List found" }, status: :ok
+        else
+          render json: @bucket_lists.search(params[:q]), status: :ok
+        end
       end
 
       def create

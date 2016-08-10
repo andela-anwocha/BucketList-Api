@@ -23,7 +23,6 @@ module Api
         end
       end
 
-
       def update
         if @item.update(item_params)
           render json: @item, status: 200
@@ -36,8 +35,8 @@ module Api
         if @item.destroy
           head :no_content
         else
-          render json: { error: "Error occured while deleting" }, 
-                  status: :internal_server_error
+          render json: { error: "Error occured while deleting" },
+                 status: :internal_server_error
         end
       end
 
