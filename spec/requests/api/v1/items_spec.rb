@@ -103,6 +103,49 @@ RSpec.describe "BucketList Items", type: :request do
     end
   end
 
+  describe "PUT /bucketlists/:bucketlist_id/items/:id" do
+    context 'as an authenticated user with valid bucketlist id and item id' do
+      it 'updates the bucketlist item' do
+        route_params = { bucketlist_id: 1, id: 1 }
+        params = { name: 'Name', done: false }
+        put api_v1_bucketlist_item_url(route_params), params, header(user)
+
+        expect(json_response[:name]).to eq(params[:name])
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context 'as an authenticated user with valid bucketlist and invalid item id' do
+      it 'responds with not found status' do
+        route_params = { bucketlist_id: 1, id: "invalid" }
+        params = { name: 'Name', done: false }
+        put api_v1_bucketlist_item_url(route_params), params, header(user)
+
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context 'as an authenticated user with invalid bucketlist id' do
+      it 'responds with not found status' do
+        route_params = { bucketlist_id: "invalid", id: 1 }
+        params = { name: 'Name', done: false }
+        put api_v1_bucketlist_item_url(route_params), params, header(user)
+
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context 'as an authenticated user with a used item name' do
+      it 'responds with errors' do
+        route_params = { bucketlist_id: 1, id: 1 }
+        params = { name: user.bucket_lists.first.items.last.name, done: false }
+        put api_v1_bucketlist_item_url(route_params), params, header(user)
+
+        expect(response.status).to eq(422)
+      end
+    end
+  end
+
   describe "DELETE /bucketlists/:bucketlist_id/items/:id" do
     context "as an authenticated user with valid bucketlist id and item id" do
       it "removes the bucketlist item" do
