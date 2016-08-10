@@ -160,6 +160,66 @@ RSpec.describe "BucketLists", type: :request do
     end
   end
 
+  describe "GET /api/v1/bucketlists?page=*&limit=*" do
+    context "as an authenticated user with page and limit parameter" do
+      it "returns all bucketlists with the specified criteria" do
+        pagination_query = { page: 1, limit: 1 }
+        get api_v1_bucketlists_url, pagination_query, header(user)
+
+        expect(json_response.count).to eq(1)
+      end
+    end
+
+    context "as an authenticated user with page and no limit parameter" do
+      it "returns all bucketlists" do
+        pagination_query = { page: 1 }
+        get api_v1_bucketlists_url, pagination_query, header(user)
+
+        expect(json_response.count).to eq(user.bucket_lists.count)
+      end
+    end
+
+    context "as an authenticated user with limit and no page parameter" do
+      it "returns all bucketlists limited by the limit parameter" do
+        pagination_query = { page: nil, limit: 1 }
+        get api_v1_bucketlists_url, pagination_query, header(user)
+
+        expect(json_response.count).to eq(1)
+      end
+    end
+
+    context "as an unauthenticated user" do
+      it "returns a 401 status error" do
+        pagination_query = { page: 1, limit: 1 }
+        get api_v1_bucketlists_url, pagination_query
+
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
+  describe "GET /api/v1/bucketlists?search=*&page=*&limit=*" do
+    context "as an authenticated user" do
+      it "returns all bucketlists matching the specified criteria" do
+        pagination_query = { search: "Humanitarian", page: 1, limit: 1 }
+        get api_v1_bucketlists_url, pagination_query, header(user)
+                
+        expect(json_response[0].slice(:name).values).
+          to match_array [user.bucket_lists.first.name]
+        expect(response.status).to eq(200)
+      end
+    end
+
+    context "as an unauthenticated user" do
+      it "returns a 401 status error" do
+        pagination_query = { search: "Humanitarian", page: 1, limit: 1 }
+        get api_v1_bucketlists_url, pagination_query
+
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
   describe "DELETE /api/v1/bucketlists/:id" do
     context "as an authenticated user with a valid bucketlist id" do
       it "removes the bucket list" do
