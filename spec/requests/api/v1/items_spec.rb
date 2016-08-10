@@ -33,6 +33,44 @@ RSpec.describe "BucketList Items", type: :request do
     end
   end
 
+  describe "GET /bucketlists/:bucketlist_id/items/:id" do
+    context "as an authenticated user with valid bucketlist id and item id" do
+      it "returns all bucket list items" do
+        params = { bucketlist_id: 1, id: 1 }
+        get api_v1_bucketlist_item_url(params), {}, header(user)
+
+        expect(json_response[:name]).to eq(bucket.items.first.name)
+      end
+    end
+
+    context "as an authenticated user with invalid bucketlist id" do
+      it "returns a 404 status" do
+        params = { bucketlist_id: "invalid", id: 1 }
+        get api_v1_bucketlist_item_url(params), {}, header(user)
+
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context "as an authenticated user with invalid item id" do
+      it "returns a 404 status" do
+        params = { bucketlist_id: 1, id: 200 }
+        get api_v1_bucketlist_item_url(params), {}, header(user)
+
+        expect(response.status).to eq(404)
+      end
+    end
+
+    context "as an unauthenticated user" do
+      it "returns a 401 status" do
+        params = { bucketlist_id: 1, id: 1 }
+        get api_v1_bucketlist_item_url(params), {}
+
+        expect(response.status).to eq(401)
+      end
+    end
+  end
+
   describe "POST /bucketlists/:id/items/" do
     context "as an authenticated user with valid bucketlist id" do
       it "creates the bucketlist item" do
