@@ -10,9 +10,9 @@ module Api
 
       def create
         @bucket_list = BucketList.new(bucket_list_params)
-        if @bucket_list.save
-          @bucket_list.update(user: @user)
-          render json: @bucket_list, status: :created
+        if @bucket_list.save && @bucket_list.update(user: @user)
+          render json: @bucket_list, status: :created,
+                 location: api_v1_bucketlists_url(@bucket_list)
         else
           render json: { errors: @bucket_list.errors },
                  status: :unprocessable_entity
