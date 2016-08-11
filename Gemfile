@@ -6,6 +6,10 @@ gem "rails-api"
 
 gem "active_model_serializers"
 
+gem "jwt"
+
+gem "bcrypt"
+
 group :development, :test do
   gem "rspec-rails", "~> 3.5"
   gem "database_cleaner"
@@ -17,11 +21,10 @@ group :development, :test do
   gem "pry-rails"
   gem "spring"
   gem "simplecov", require: false
+  gem 'coveralls', require: false
 end
 
 group :production do
   gem "pg"
   gem "rails_12factor"
-  gem "jwt"
-  gem "bcrypt"
 end
