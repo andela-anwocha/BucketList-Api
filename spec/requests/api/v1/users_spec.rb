@@ -14,7 +14,7 @@ RSpec.describe "Users", type: :request do
     end
 
     context "when all required information is not provided" do
-      it "does not create user" do
+      it "does not create user and responds with a 422 status error" do
         expect { post api_v1_users_path, name: "Name" }.
           to_not change(User, :count)
 

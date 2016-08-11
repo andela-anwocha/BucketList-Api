@@ -15,7 +15,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an authenticated user with invalid bucketlist id" do
-      it "returns a 404 status" do
+      it "responds with a 404 http status" do
         invalid_id = { bucketlist_id: "invalid" }
         get api_v1_bucketlist_items_url(invalid_id), {}, header(user)
 
@@ -24,7 +24,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "returns a 401 status" do
+      it "responds with a 401 status" do
         get api_v1_bucketlist_items_url(bucketlist_id: 1), {}
 
         expect(response.status).to eq(401)
@@ -44,7 +44,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an authenticated user with invalid bucketlist id" do
-      it "returns a 404 status" do
+      it "responds with a 404 http status code" do
         params = { bucketlist_id: "invalid", id: 1 }
         get api_v1_bucketlist_item_url(params), {}, header(user)
 
@@ -53,7 +53,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an authenticated user with invalid item id" do
-      it "returns a 404 status" do
+      it "responds with a 404 http status" do
         params = { bucketlist_id: 1, id: 200 }
         get api_v1_bucketlist_item_url(params), {}, header(user)
 
@@ -62,7 +62,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "returns a 401 status" do
+      it "responds with a 401 http status" do
         params = { bucketlist_id: 1, id: 1 }
         get api_v1_bucketlist_item_url(params), {}
 
@@ -95,7 +95,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an authenticated user with invalid bucketlist id" do
-      it "returns a 404 error" do
+      it "responds with a http 404 status error" do
         params = { name: "Name", done: false }
         invalid_id = { bucketlist_id: "invalid" }
         post api_v1_bucketlist_items_url(invalid_id), params, header(user)
@@ -105,7 +105,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "does not create the bucketlist and returns a 401 status" do
+      it "does not create the bucketlist and responds with a 401 status" do
         params = { name: "Name", done: false }
         post api_v1_bucketlist_items_url(bucketlist_id: 1), params
 
@@ -167,7 +167,7 @@ RSpec.describe "BucketList Items", type: :request do
         expect(response.status).to eq(204)
       end
 
-      it "returns a 500 when error is encountered while deletind" do
+      it "responds with 500 status when error is encountered while deleting" do
         params = { bucketlist_id: 1, id: 1 }
         allow_any_instance_of(Item).to receive(:destroy).and_return(false)
         delete api_v1_bucketlist_item_url(params), {}, header(user)
@@ -177,7 +177,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an authenticated user with invalid bucketlist id" do
-      it "returns a 404 status" do
+      it "responds with a 404 http status" do
         params = { bucketlist_id: "invalid", id: 1 }
 
         expect { delete api_v1_bucketlist_item_url(params), {}, header(user) }.
@@ -187,7 +187,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an authenticated user with invalid item id" do
-      it "returns a 404 status" do
+      it "responds with a http 404 status" do
         params = { bucketlist_id: 1, id: "invalid" }
 
         expect { delete api_v1_bucketlist_item_url(params), {}, header(user) }.
@@ -197,7 +197,7 @@ RSpec.describe "BucketList Items", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "returns a 401 status" do
+      it "responds with a http 401 status error" do
         params = { bucketlist_id: 1, id: 1 }
         delete api_v1_bucketlist_item_url(params), {}
 

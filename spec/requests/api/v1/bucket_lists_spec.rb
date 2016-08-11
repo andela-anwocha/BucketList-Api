@@ -6,7 +6,7 @@ RSpec.describe "BucketLists", type: :request do
 
   describe "GET /api/v1/bucketlists" do
     context "as an authenticated user" do
-      it "returns all bucket lists when bucketlists are found" do
+      it "returns all bucket lists if bucketlists are found" do
         get api_v1_bucketlists_url, {}, header(user)
 
         expect(json_response.count).to eq(user.bucket_lists.count)
@@ -23,7 +23,7 @@ RSpec.describe "BucketLists", type: :request do
     end
 
     context "as a logged in user with invalid token" do
-      it "returns an error message" do
+      it "returns an error message with a 401 http status code" do
         get api_v1_bucketlists_url, {}, invalid_header(user)
 
         expect(json_response[:error]).to eq("Invalid token signature")
@@ -32,7 +32,7 @@ RSpec.describe "BucketLists", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "returns an error message" do
+      it "responds with a 401 http status code" do
         get api_v1_bucketlists_url, {}
 
         expect(response.status).to eq(401)
@@ -79,7 +79,7 @@ RSpec.describe "BucketLists", type: :request do
   describe "GET /api/v1/bucketlists/:id" do
     context "as an authenticated user with a valid bucketlist id" do
       it "returns the specific bucketlist" do
-        bucket_id = { id: 1 }
+        bucket_id = { id: user.bucket_lists.first.id }
         get api_v1_bucketlist_url(bucket_id), {}, header(user)
 
         expect(json_response[:name]).to eq(user.bucket_lists.first.name)
@@ -89,7 +89,7 @@ RSpec.describe "BucketLists", type: :request do
 
     context "as an authenticated user with an invalid bucketlist id" do
       it "does not return the bucket list" do
-        get api_v1_bucketlist_url(id: 10), {}, header(user)
+        get api_v1_bucketlist_url(id: "invalid_id"), {}, header(user)
 
         expect(json_response[:error]).to eq("Bucket List Not found")
         expect(response.status).to eq(404)
@@ -97,7 +97,7 @@ RSpec.describe "BucketLists", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "does not return the bucket list" do
+      it "responds with a http 401 status code" do
         get api_v1_bucketlist_url(user.bucket_lists.first), {}
 
         expect(response.status).to eq(401)
@@ -109,7 +109,7 @@ RSpec.describe "BucketLists", type: :request do
     context "as an authenticated user with valid bucket_list id" do
       it "updates the bucket list" do
         params = { name: "Name" }
-        put api_v1_bucketlist_url(id: 1), params, header(user)
+        put api_v1_bucketlist_url(id: user.bucket_lists.first.id), params, header(user)
         user.reload
 
         expect(user.bucket_lists.first.name).to eq(params[:name])
@@ -132,7 +132,7 @@ RSpec.describe "BucketLists", type: :request do
     context "as an authenticated user with a non unique bucket name" do
       it "does not update name and returns a 422 status error" do
         params = { name: user.bucket_lists.last.name }
-        valid_id = { id: 1 }
+        valid_id = { id: user.bucket_lists.first.id }
         put api_v1_bucketlist_url(valid_id), params, header(user)
         user.reload
 
@@ -144,7 +144,7 @@ RSpec.describe "BucketLists", type: :request do
     context "as an unauthenticated user" do
       it "does not update name and renders a 401 status error" do
         params = { name: user.bucket_lists.last.name }
-        valid_id = { id: 1 }
+        valid_id = { id: user.bucket_lists.first.id }
         put api_v1_bucketlist_url(valid_id), params
         user.reload
 
@@ -154,7 +154,7 @@ RSpec.describe "BucketLists", type: :request do
     end
   end
 
-  describe "GET /api/v1/bucketlists?q=" do
+  describe "GET /api/v1/bucketlists?q=(query)" do
     context "as an authenticated user" do
       it "returns all bucketlists matching the search query" do
         search_query = { q: "Humanitarian" }
@@ -204,7 +204,7 @@ RSpec.describe "BucketLists", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "returns a 401 status error" do
+      it "responds with a 401 status error" do
         pagination_query = { page: 1, limit: 1 }
         get api_v1_bucketlists_url, pagination_query
 
@@ -226,7 +226,7 @@ RSpec.describe "BucketLists", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "returns a 401 status error" do
+      it "responds with a 401 status error" do
         pagination_query = { search: "Humanitarian", page: 1, limit: 1 }
         get api_v1_bucketlists_url, pagination_query
 
@@ -257,7 +257,7 @@ RSpec.describe "BucketLists", type: :request do
     end
 
     context "as an unauthenticated user" do
-      it "does not remove bucketlist and returns a 401 status" do
+      it "does not remove bucketlist and reponds with a 401 status code" do
         valid_id = { id: 1 }
 
         expect { delete api_v1_bucketlist_url(valid_id), {} }.

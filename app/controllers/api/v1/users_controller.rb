@@ -21,7 +21,6 @@ module Api
         token = Authentication.encode(user_id: user.id)
         user.update(token: token)
       end
-
     end
   end
 end

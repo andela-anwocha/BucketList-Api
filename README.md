@@ -1,6 +1,6 @@
 <h1>eBucket API</h1>
 
-[![Build Status](https://travis-ci.org/andela-anwocha/bucketlist-api.svg?branch=develop)](https://travis-ci.org/andela-anwocha/bucketlist-api) [![Code Climate](https://codeclimate.com/github/andela-anwocha/bucketlist-api/badges/gpa.svg)](https://codeclimate.com/github/andela-anwocha/bucketlist-api) [![Coverage Status](https://coveralls.io/repos/github/andela-anwocha/bucketlist-api/badge.svg?branch=develop)](https://coveralls.io/github/andela-anwocha/bucketlist-api?branch=develop)
+[![Build Status](https://travis-ci.org/andela-anwocha/bucketlist-api.svg?branch=develop)](https://travis-ci.org/andela-anwocha/bucketlist-api) [![Code Climate](https://codeclimate.com/github/andela-anwocha/bucketlist-api/badges/gpa.svg)](https://codeclimate.com/github/andela-anwocha/bucketlist-api) [![Coverage Status](https://coveralls.io/repos/github/andela-anwocha/bucketlist-api/badge.svg)](https://coveralls.io/github/andela-anwocha/bucketlist-api)
 
 <h3>Overview</h3>
 
