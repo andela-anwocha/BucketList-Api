@@ -4,6 +4,8 @@ gem "rails", "4.2.6"
 
 gem "rails-api"
 
+gem "active_model_serializers"
+
 group :development, :test do
   gem "rspec-rails", "~> 3.5"
   gem "database_cleaner"
@@ -22,5 +24,4 @@ group :production do
   gem "rails_12factor"
   gem "jwt"
   gem "bcrypt"
-  gem "active_model_serializers"
 end

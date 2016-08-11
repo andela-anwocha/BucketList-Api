@@ -19,7 +19,6 @@ module Api
           render json: { message: Message.logout_success }, status: 200
         end
       end
-      
     end
   end
 end

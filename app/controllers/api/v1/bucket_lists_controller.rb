@@ -53,7 +53,6 @@ module Api
           render json: { error: Message.invalid_bucket }, status: :not_found
         end
       end
-      
     end
   end
 end
