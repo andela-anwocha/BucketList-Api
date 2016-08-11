@@ -1,6 +1,6 @@
 <h1>eBucket API</h1>
-<hr />
-[![Code Climate](https://codeclimate.com/github/andela-anwocha/bucketlist-api/badges/gpa.svg)](https://codeclimate.com/github/andela-anwocha/bucketlist-api)
+
+[![Build Status](https://travis-ci.org/andela-anwocha/bucketlist-api.svg?branch=develop)](https://travis-ci.org/andela-anwocha/bucketlist-api) [![Code Climate](https://codeclimate.com/github/andela-anwocha/bucketlist-api/badges/gpa.svg)](https://codeclimate.com/github/andela-anwocha/bucketlist-api) [![Coverage Status](https://coveralls.io/repos/github/andela-anwocha/bucketlist-api/badge.svg?branch=develop)](https://coveralls.io/github/andela-anwocha/bucketlist-api?branch=develop)
 
 <h3>Overview</h3>
 
@@ -120,11 +120,11 @@ A typical bucket list requested by a user would look like this:
     items: [
            {
                id: 1,
-               name: “I to do this before the end of this year”,
+               name: “I am to do this before the end of this year”,
                done: false
              }
            ]
-    created_by: “John”
+    created_by: “Smith”
 }
 </pre>
 
