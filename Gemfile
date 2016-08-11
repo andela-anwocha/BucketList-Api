@@ -21,7 +21,7 @@ group :development, :test do
   gem "pry-rails"
   gem "spring"
   gem "simplecov", require: false
-  gem 'coveralls', require: false
+  gem "coveralls", require: false
 end
 
 group :production do

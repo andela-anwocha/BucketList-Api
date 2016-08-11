@@ -1,5 +1,4 @@
 class ApplicationController < ActionController::API
-  protected
 
   def authenticate_request
     user_id_in_token? && user_active?

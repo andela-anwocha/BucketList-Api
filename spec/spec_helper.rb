@@ -1,7 +1,7 @@
 require "simplecov"
 SimpleCov.start "rails"
 
-require 'coveralls'
+require "coveralls"
 Coveralls.wear!
 
 require "support/factory_girl"

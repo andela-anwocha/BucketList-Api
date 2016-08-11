@@ -18,7 +18,7 @@ module Api
         @bucket_list = BucketList.new(bucket_list_params)
         if @bucket_list.save && @bucket_list.update(user: @user)
           render json: @bucket_list, status: :created,
-                 location: api_v1_bucketlists_url(@bucket_list)
+                 location: api_v1_bucketlist_url(@bucket_list)
         else
           render json: { errors: @bucket_list.errors },
                  status: :unprocessable_entity
@@ -29,7 +29,8 @@ module Api
         if @bucket_list.update(bucket_list_params)
           render json: @bucket_list, status: :ok
         else
-          render json: @bucket_list.errors, status: :unprocessable_entity
+          render json: { errors: @bucket_list.errors },
+                 status: :unprocessable_entity
         end
       end
 
