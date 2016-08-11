@@ -2,13 +2,13 @@ module Api
   module V1
     class BucketListsController < ApplicationController
       before_action :authenticate_request
-      before_filter :assign_bucket_list, only: [:show, :destroy, :update]
+      before_action :assign_bucket_list, only: [:show, :destroy, :update]
 
       def index
         @bucket_lists = @user.bucket_lists
 
         if @bucket_lists.empty?
-          render json: { message: "No Bucket list found" }, status: :ok
+          render json: { message: Message.no_bucket }, status: :ok
         else
           render json: @bucket_lists.paginate_and_search(params), status: :ok
         end
@@ -18,7 +18,7 @@ module Api
         @bucket_list = BucketList.new(bucket_list_params)
         if @bucket_list.save && @bucket_list.update(user: @user)
           render json: @bucket_list, status: :created,
-                 location: api_v1_bucketlists_url(@bucket_list)
+                 location: api_v1_bucketlist_url(@bucket_list)
         else
           render json: { errors: @bucket_list.errors },
                  status: :unprocessable_entity
@@ -29,7 +29,8 @@ module Api
         if @bucket_list.update(bucket_list_params)
           render json: @bucket_list, status: :ok
         else
-          render json: @bucket_list.errors, status: :unprocessable_entity
+          render json: { errors: @bucket_list.errors },
+                 status: :unprocessable_entity
         end
       end
 
@@ -50,7 +51,7 @@ module Api
       def assign_bucket_list
         @bucket_list = @user.bucket_lists.find_by(id: params[:id])
         unless @bucket_list
-          render json: { error: "Bucket List Not found" }, status: :not_found
+          render json: { error: Message.invalid_bucket }, status: :not_found
         end
       end
     end

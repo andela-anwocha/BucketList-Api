@@ -12,6 +12,6 @@ class Authentication
       JWT.decode(token, Rails.application.secrets.secret_key_base)[0]
     )[:data]
   rescue
-    { error: "Invalid token signature" }
+    { error: Message.invalid_token }
   end
 end

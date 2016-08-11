@@ -15,4 +15,5 @@ Rails.application.routes.draw do
       
     end
   end
+  get '/', :to => redirect('/api/docs/index.html')
 end

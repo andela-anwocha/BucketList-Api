@@ -76,8 +76,9 @@ RSpec.describe "BucketList Items", type: :request do
       it "creates the bucketlist item when a unique name is given" do
         params = { name: "Name", done: false }
         bucket = user.bucket_lists.first
+        endpoint = api_v1_bucketlist_items_url(bucket)
 
-        expect { post api_v1_bucketlist_items_url(bucket), params, header(user) }.
+        expect { post endpoint, params, header(user) }.
           to change(Item, :count).by(1)
         expect(response.status).to eq(201)
       end
@@ -85,8 +86,9 @@ RSpec.describe "BucketList Items", type: :request do
       it "does not create the bucket list when a non unique name is given" do
         bucket = user.bucket_lists.first
         params = bucket.items.first.attributes
+        endpoint = api_v1_bucketlist_items_url(bucket)
 
-        expect { post api_v1_bucketlist_items_url(bucket), params, header(user) }.
+        expect { post endpoint, params, header(user) }.
           to_not change(Item, :count)
         expect(response.status).to eq(422)
       end

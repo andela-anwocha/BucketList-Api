@@ -17,7 +17,7 @@ RSpec.describe "BucketLists", type: :request do
         user.bucket_lists.destroy_all
 
         get api_v1_bucketlists_url, {}, header(user)
-        expect(json_response[:message]).to eq("No Bucket list found")
+        expect(json_response[:message]).to eq("No BucketList Found")
         expect(response.status).to eq(200)
       end
     end
@@ -26,7 +26,7 @@ RSpec.describe "BucketLists", type: :request do
       it "returns an error message" do
         get api_v1_bucketlists_url, {}, invalid_header(user)
 
-        expect(json_response[:error]).to eq("Invalid Token")
+        expect(json_response[:error]).to eq("Invalid token signature")
         expect(response.status).to eq(401)
       end
     end

@@ -1,10 +1,13 @@
 class ApplicationController < ActionController::API
-  attr_reader :current_user
-
-  protected
 
   def authenticate_request
     user_id_in_token? && user_active?
+  end
+
+  private
+
+  def auth_token
+    Authentication.decode(http_token)
   end
 
   def user_active?
@@ -13,19 +16,13 @@ class ApplicationController < ActionController::API
     if @user && validate_token(@user.token)
       true
     else
-      render json: { error: "Unauthenticated User" }, status: :unauthorized
+      render json: { error: Message.unauthenticated }, status: :unauthorized
       false
     end
   end
 
-  def auth_token
-    Authentication.decode(http_token)
-  end
-
-  private
-
   def validate_token(token)
-    return true if token == http_token
+    token == http_token
   end
 
   def http_token
@@ -36,7 +33,7 @@ class ApplicationController < ActionController::API
     if http_token && !auth_token[:error] && auth_token[:user_id]
       true
     else
-      render json: { error: "Invalid Token" }, status: :unauthorized
+      render json: { error: Message.invalid_token }, status: :unauthorized
       false
     end
   end

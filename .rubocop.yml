@@ -5,6 +5,8 @@ AllCops:
     - "db/schema.rb"
     - "config/**/*"
     - "bin/*"
+    - "Rakefile"
+    - "spec/rails_helper.rb"
   UseCache: false
 Style/CollectionMethods:
   Description: Preferred collection methods.

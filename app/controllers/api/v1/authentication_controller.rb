@@ -6,17 +6,17 @@ module Api
         if user && user.authenticate(params[:password])
           token = Authentication.encode(user_id: user.id)
           user.update(token: token)
-          render json: { notice: "Login successful", token: token }, status: 200
+          render json: { message: Message.login_success, token: token },
+                 status: 200
         else
-          render json: { error: "Incorrect username or password" }, status: 401
+          render json: { error: Message.login_failed }, status: 401
         end
       end
 
       def logout
         if user_active?
           @user.update(token: nil)
-
-          render json: { notice: "Logout successful" }, status: 200
+          render json: { message: Message.logout_success }, status: 200
         end
       end
     end
