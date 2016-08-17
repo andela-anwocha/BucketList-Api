@@ -27,10 +27,6 @@ class Message
     "Unauthenticated User"
   end
 
-  def self.delete_error
-    "Error occured while deleting"
-  end
-
   def self.no_item
     "Item not found"
   end

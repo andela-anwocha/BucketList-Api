@@ -2,6 +2,7 @@ require "rails_helper"
 
 RSpec.describe "Authentication", type: :request do
   let(:user) { create(:user) }
+
   describe "POST /api/v1/oauth/login" do
     context "when valid attributes are passed in" do
       it "signs in user" do
