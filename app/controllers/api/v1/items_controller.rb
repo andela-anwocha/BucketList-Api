@@ -24,19 +24,14 @@ module Api
 
       def update
         if @item.update(item_params)
-          render json: @item, status: 200
+          render json: @item, status: :ok
         else
           render json: { errors: @item.errors }, status: :unprocessable_entity
         end
       end
 
       def destroy
-        if @item.destroy
-          head :no_content
-        else
-          render json: { error: Message.delete_error },
-                 status: :internal_server_error
-        end
+        head :no_content if @item.destroy
       end
 
       private
