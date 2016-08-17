@@ -373,7 +373,7 @@ https://ebucket.herokuapp.com/api/v1/ <span class="se">\</span>
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://ebucket.herokuapp.com/api/v1/bucket_lists</code> </p>
+<p><code class="prettyprint">POST https://ebucket.herokuapp.com/api/v1/bucketlists</code> </p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -412,7 +412,7 @@ Remember request must be of type POST
 <blockquote>
 <p>HTTP Status: 200 </p>
 </blockquote>
-<pre class="highlight shell"><code>curl -i -X GET https://ebucket.herokuapp.com/api/v1/bucket_lists <span class="se">\</span>
+<pre class="highlight shell"><code>curl -i -X GET https://ebucket.herokuapp.com/api/v1/bucketlists <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -433,7 +433,7 @@ Remember request must be of type POST
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists</code> </p>
 
 <p>This should return all bucketlist created by the user</p>
 
@@ -455,7 +455,7 @@ Remember request must be of type POST
 <blockquote>
 <p>HTTP Status: 200 </p>
 </blockquote>
-<pre class="highlight shell"><code>curl -i -X GET https://ebucket.herokuapp.com/api/v1/bucket_lists/1 <span class="se">\</span>
+<pre class="highlight shell"><code>curl -i -X GET https://ebucket.herokuapp.com/api/v1/bucketlists/1 <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -474,7 +474,7 @@ Remember request must be of type POST
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists/1</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists/1</code> </p>
 
 <p>This should return a bucketlist created by the user with bucket list id of 1 </p>
 
@@ -500,7 +500,7 @@ Remember to pass a valid id in this case 1
 <blockquote>
 <p>HTTP Status: 200 </p>
 </blockquote>
-<pre class="highlight shell"><code>curl -i -X GET -d <span class="s2">"q=Get Married"</span> https://ebucket.herokuapp.com/api/v1/bucket_lists <span class="se">\</span>
+<pre class="highlight shell"><code>curl -i -X GET -d <span class="s2">"q=Get Married"</span> https://ebucket.herokuapp.com/api/v1/bucketlists <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -519,7 +519,7 @@ Remember to pass a valid id in this case 1
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists</code> </p>
 
 <p>This should return all bucketlist created by the user</p>
 
@@ -542,7 +542,7 @@ Remember to pass a valid id in this case 1
 <blockquote>
 <p>HTTP Status: 200 </p>
 </blockquote>
-<pre class="highlight shell"><code>curl -i -X GET -d <span class="s2">"page=2&amp;limit=20"</span> https://ebucket.herokuapp.com/api/v1/bucket_lists <span class="se">\</span>
+<pre class="highlight shell"><code>curl -i -X GET -d <span class="s2">"page=2&amp;limit=20"</span> https://ebucket.herokuapp.com/api/v1/bucketlists <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -560,7 +560,7 @@ Remember to pass a valid id in this case 1
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists</code> </p>
 
 <p>This should return all bucketlist based on the parameter specified </p>
 
@@ -587,7 +587,7 @@ Remember to pass a valid id in this case 1
 <blockquote>
 <p>HTTP Status: 200</p>
 </blockquote>
-<pre class="highlight shell"><code>curl -i -X PUT -d <span class="s2">"name=Have a baby"</span> https://ebucket.herokuapp.com/api/v1/bucket_lists/1 <span class="se">\</span>
+<pre class="highlight shell"><code>curl -i -X PUT -d <span class="s2">"name=Have a baby"</span> https://ebucket.herokuapp.com/api/v1/bucketlists/1 <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -606,7 +606,7 @@ Remember to pass a valid id in this case 1
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT https://ebucket.herokuapp.com/api/v1/bucket_lists/1</code> </p>
+<p><code class="prettyprint">PUT https://ebucket.herokuapp.com/api/v1/bucketlists/1</code> </p>
 
 <p>This should update bucket list with id 1</p>
 
@@ -633,7 +633,7 @@ Remember to pass a valid id in this case 1
 <blockquote>
 <p>HTTP Status: 204</p>
 </blockquote>
-<pre class="highlight shell"><code>curl -i -X DELETE https://ebucket.herokuapp.com/api/v1/bucket_lists/1 <span class="se">\</span>
+<pre class="highlight shell"><code>curl -i -X DELETE https://ebucket.herokuapp.com/api/v1/bucketlists/1 <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -644,7 +644,7 @@ Remember to pass a valid id in this case 1
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">DELETE https://ebucket.herokuapp.com/api/v1/bucket_lists/1</code> </p>
+<p><code class="prettyprint">DELETE https://ebucket.herokuapp.com/api/v1/bucketlists/1</code> </p>
 
 <p>This should delete bucket list with id 1</p>
 
@@ -674,7 +674,7 @@ Remember to pass a valid id in this case 1
 <p>HTTP Status: 201 </p>
 </blockquote>
 <pre class="highlight shell"><code>curl -i -X POST -d <span class="s2">"name=start dating"</span> <span class="se">\</span>
-https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items <span class="se">\</span>
+https://ebucket.herokuapp.com/api/v1/bucketlists/1/items <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -693,7 +693,7 @@ https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items <span class="se">\</sp
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">POST https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items</code> </p>
+<p><code class="prettyprint">POST https://ebucket.herokuapp.com/api/v1/bucketlists/1/items</code> </p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -719,7 +719,7 @@ Rember to pass in the bucket lists id for the associated item, in this case 1
 <p>HTTP Status: 201 </p>
 </blockquote>
 <pre class="highlight shell"><code>curl -i -X PUT -d <span class="s2">"name=see her parent"</span> <span class="se">\</span>
-https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items <span class="se">\</span>
+https://ebucket.herokuapp.com/api/v1/bucketlists/1/items <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -736,7 +736,7 @@ https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items <span class="se">\</sp
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">PUT https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items</code> </p>
+<p><code class="prettyprint">PUT https://ebucket.herokuapp.com/api/v1/bucketlists/1/items</code> </p>
 
 <h3 id="query-parameters">Query Parameters</h3>
 
@@ -762,7 +762,7 @@ Rember to pass in the bucket lists id for the associated item, in this case 1
 <p>HTTP Status: 200 </p>
 </blockquote>
 <pre class="highlight shell"><code>curl -i -X GET 
-https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items <span class="se">\</span>
+https://ebucket.herokuapp.com/api/v1/bucketlists/1/items <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -788,7 +788,7 @@ https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items <span class="se">\</sp
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists/1/items</code> </p>
 
 <aside class="success">
 Rember to pass in the bucket lists id for the associated item, in this case 1
@@ -800,7 +800,7 @@ Rember to pass in the bucket lists id for the associated item, in this case 1
 <p>HTTP Status: 200 </p>
 </blockquote>
 <pre class="highlight shell"><code>curl -i -X GET 
-https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items/1 <span class="se">\</span>
+https://ebucket.herokuapp.com/api/v1/bucketlists/1/items/1 <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -819,7 +819,7 @@ https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items/1 <span class="se">\</
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items/1</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists/1/items/1</code> </p>
 
 <aside class="success">
 Rember to pass in the bucket lists id for the associated item, in this case 1
@@ -831,7 +831,7 @@ Rember to pass in the bucket lists id for the associated item, in this case 1
 <p>HTTP Status: 204 </p>
 </blockquote>
 <pre class="highlight shell"><code>curl -i -X DELETE 
-https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items/1 <span class="se">\</span>
+https://ebucket.herokuapp.com/api/v1/bucketlists/1/items/1 <span class="se">\</span>
 -H <span class="s2">"Authorization: 029kdfsa0932a.xlkdsfiosdfds"</span>
 </code></pre>
 
@@ -841,7 +841,7 @@ https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items/1 <span class="se">\</
 
 <h3 id="http-request">HTTP Request</h3>
 
-<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucket_lists/1/items/1</code> </p>
+<p><code class="prettyprint">GET https://ebucket.herokuapp.com/api/v1/bucketlists/1/items/1</code> </p>
 
 <aside class="success">
 Rember to pass in the bucket lists id for the associated item, in this case 1

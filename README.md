@@ -4,7 +4,7 @@
 
 <h3>Overview</h3>
 
-eBucket is an API that lets you manage a bucket list. A bucket list is simply a number of experiences or achievements that a person hopes to have or accomplish during their lifetime.
+eBucket is an API that lets you manage bucket lists. A bucket list is simply a number of experiences or achievements that a person hopes to have or accomplish during their lifetime.
 
 
 
